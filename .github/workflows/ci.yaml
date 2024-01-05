@@ -6,6 +6,13 @@ on:
       - 'main'
   workflow_dispatch:
   
+permissions: write-all
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   docker:
@@ -44,4 +51,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: intellecta/postgres:${{ steps.tag_version.outputs.new_tag }}
+          tags: ${{env.IMAGE_NAME}}:${{ steps.tag_version.outputs.new_tag }}
