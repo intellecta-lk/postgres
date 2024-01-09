@@ -1,4 +1,4 @@
-FROM ghcr.io/intellect-lk/postgres:dev-latest
+FROM ghcr.io/intellecta-lk/postgres:dev-latest
 
 #scripts
 COPY scripts/realtime.sql /docker-entrypoint-initdb.d/migrations/99-realtime.sql
