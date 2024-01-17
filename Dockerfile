@@ -19,7 +19,7 @@ RUN umask u=rwx,g=rx,o= && \
 # setup archive
 RUN echo "archive_mode = yes" >> /etc/postgresql/postgresql.conf && \
     echo "archive_command = 'envdir /etc/wal-g.d/env /usr/local/bin/wal-g wal-push %p'" >> /etc/postgresql/postgresql.conf && \
-    echo "archive_timeout = 60" >> /etc/postgresql/postgresql.conf && \
+    echo "archive_timeout = 60" >> /etc/postgresql/postgresql.conf 
 
 # backup cronjob
 RUN echo "0 0 * * * postgres /usr/bin/envdir /etc/wal-g.d/env /usr/local/bin/wal-g backup-push /var/lib/postgresql/data" > /etc/cron.d/pg_backup
