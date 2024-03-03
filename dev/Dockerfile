@@ -80,7 +80,7 @@ FROM supabase/postgres:${postgres_version} as production
 COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get remove timescaledb
+RUN apt-get remove timescaledb -y --no-install-recommends
 RUN apt-get update && apt-get install -y --no-install-recommends \
     /tmp/*.deb \
     # Needed for anything using libcurl
