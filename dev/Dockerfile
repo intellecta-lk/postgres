@@ -68,7 +68,7 @@ RUN cmake ..
 RUN --mount=type=cache,target=/ccache,from=public.ecr.aws/supabase/postgres:ccache \
     make -j$(nproc)
 # Create debian package
-RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgname=timeseries-community --pkgversion=${timescaledb_release} --nodoc
+RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgname=timescaledb --pkgversion=${timescaledb_release} --nodoc
 
 
 ####################
@@ -80,7 +80,7 @@ FROM supabase/postgres:${postgres_version} as production
 COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get remove timescaledb -y --no-install-recommends
+RUN apt-get purge timescaledb -y --no-install-recommends
 RUN apt-get update && apt-get install -y --no-install-recommends \
     /tmp/*.deb \
     # Needed for anything using libcurl
