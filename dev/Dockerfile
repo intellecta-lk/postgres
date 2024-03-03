@@ -76,7 +76,7 @@ RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgnam
 ####################
 FROM supabase/postgres:${postgres_version} as production
 
-RUN dpkg –purge timescaledb
+RUN apt-get remove timescaledb
 COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
