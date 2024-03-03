@@ -68,7 +68,7 @@ RUN cmake ..
 RUN --mount=type=cache,target=/ccache,from=public.ecr.aws/supabase/postgres:ccache \
     make -j$(nproc)
 # Create debian package
-RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgname=timescaledb-com --pkgversion=${timescaledb_release} --nodoc
+RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgname=timeseries-community --pkgversion=${timescaledb_release} --nodoc
 
 
 ####################
@@ -76,6 +76,8 @@ RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgnam
 ####################
 FROM supabase/postgres:${postgres_version} as production
 
+RUN rm -rf /tmp/timescaledb*.deb
+RUN ls -la /tmp/
 COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
