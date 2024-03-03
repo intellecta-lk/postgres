@@ -76,10 +76,11 @@ RUN checkinstall -D --install=no --fstrans=no --backup=no --pakdir=/tmp --pkgnam
 ####################
 FROM supabase/postgres:${postgres_version} as production
 
-RUN apt-get remove timescaledb
+
 COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get remove timescaledb
 RUN apt-get update && apt-get install -y --no-install-recommends \
     /tmp/*.deb \
     # Needed for anything using libcurl
