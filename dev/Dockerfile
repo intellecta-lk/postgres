@@ -81,6 +81,10 @@ COPY --from=timescaledb-source /tmp/*.deb /tmp/
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get purge timescaledb -y --no-install-recommends
+RUN ls -la /usr/lib/postgresql/15/lib
+RUN rm -rf /usr/lib/postgresql/15/lib/timescaledb*
+RUN rm -rf /usr/share/postgresql/15/extension/timescaledb*
+RUN ls -la /usr/lib/postgresql/15/lib
 RUN apt-get update && apt-get install -y --no-install-recommends \
     /tmp/*.deb \
     # Needed for anything using libcurl
